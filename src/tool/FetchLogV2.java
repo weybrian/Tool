@@ -15,7 +15,7 @@ public class FetchLogV2 {
 		String startTime = printTime();
 		System.out.println("開始查詢時間" + startTime);
 		
-		HashMap<String, List<String>> conditionMap = readConditions("D:\\conditions.txt");
+		HashMap<String, List<String>> conditionMap = readConditions("conditions.txt");
 		execute(conditionMap);
 		
 		System.out.println("開始查詢時間" + startTime);

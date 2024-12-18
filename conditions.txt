@@ -1,0 +1,24 @@
+--兩個減號(--)代表註解
+--米字號(*)代表條件種類
+--米字號下方的值代表條件
+
+--log檔案路徑
+*logPaths
+C:\Users\brian.wei\Downloads\1131021\webitr-2024-10-15.log
+
+--想查詢的關鍵字
+*keywords
+ERROR[
+
+--想獲取的額外資訊
+*infos
+--SI=
+--RA=
+--FL=
+--"action":
+--user_id = '
+
+--查詢期間
+*period
+2024-10-15 18:18:51
+2024-10-15 19:00:00
