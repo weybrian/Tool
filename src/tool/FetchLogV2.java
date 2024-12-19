@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FetchLogV2 {
 
@@ -43,6 +44,7 @@ public class FetchLogV2 {
 					BufferedReader br = new BufferedReader(fr);) {
 				String line;
 				int num = 1;
+				HashMap<String, HashMap<String, Integer>> infoMap = initInfoMap(conditionMap);
 				while ((line = br.readLine()) != null) {
 					//跳過空行
 					if (line.isEmpty()) {
@@ -51,13 +53,66 @@ public class FetchLogV2 {
 					
 					//是否滿足要找 log 的條件
 					if (hasMeetCondition(line, conditionMap)) {
+						//列印符合條件的完整log
 						System.out.println("第" + num++ + "筆 " + line);
+						addReportList(line, conditionMap, infoMap);
 					}
 				}
+				
+				printReport(infoMap);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * 列出額外資訊報告
+	 * @param infoMap
+	 */
+	private static void printReport(HashMap<String, HashMap<String, Integer>> infoMap) {
+		for (Map.Entry<String, HashMap<String, Integer>> infoEntry : infoMap.entrySet()) {
+			//列出種類
+			System.out.println(infoEntry.getKey());
+			
+			//依照次數排序
+			List<Map.Entry<String, Integer>> list = new ArrayList<>(infoEntry.getValue().entrySet());
+	        list.sort(Map.Entry.comparingByValue());
+	        for (Map.Entry<String, Integer> orderEntry : list) {
+				System.out.println(orderEntry.getValue() + "次 " + orderEntry.getKey());
+	        }
+		}
+	}
+
+	/**
+	 * 初始化infoMap
+	 * @param conditionMap
+	 * @return
+	 */
+	private static HashMap<String, HashMap<String, Integer>> initInfoMap(HashMap<String, List<String>> conditionMap) {
+		List<String> infoList = conditionMap.get("infos");
+		HashMap<String, HashMap<String, Integer>> resultMap = new HashMap<String, HashMap<String, Integer>>();
+		for (String info : infoList) {
+			resultMap.put(info, new HashMap<String, Integer>());
+		}
+		return resultMap;
+	}
+
+	/**
+	 * 針對itr.log，整理出 想獲取的額外資訊
+	 * @param line
+	 * @param conditionMap
+	 */
+	private static void addReportList(String line, HashMap<String, List<String>> conditionMap, HashMap<String, HashMap<String, Integer>> infoMap) {
+		List<String> infos = conditionMap.get("infos");
+		
+		//抓取log純訊息
+		if (infos.contains("log")) {
+			HashMap<String, Integer> logMap = infoMap.get("log");
+			logMap.put(line.split("\\]")[3], logMap.get(line.split("\\]")[3]) == null ? 1 : logMap.get(line.split("\\]")[3]) + 1);
+		}
+		
+		//TODO 其他的info抓取
 	}
 
 	/**

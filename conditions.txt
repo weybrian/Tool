@@ -6,6 +6,11 @@
 *logPaths
 C:\Users\brian.wei\Downloads\1131021\webitr-2024-10-15.log
 
+--查詢期間
+*period
+2024-10-15 19:18:51
+2024-10-15 18:54:00
+
 --想查詢的關鍵字
 *keywords
 and ERROR[
@@ -18,8 +23,3 @@ and ERROR[
 --"action":
 --user_id = '
 log
-
---查詢期間
-*period
-2024-10-15 18:18:51
-2024-10-15 19:00:00
