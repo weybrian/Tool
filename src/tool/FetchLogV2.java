@@ -42,6 +42,7 @@ public class FetchLogV2 {
 			try (FileReader fr = new FileReader(filePath); 
 					BufferedReader br = new BufferedReader(fr);) {
 				String line;
+				int num = 1;
 				while ((line = br.readLine()) != null) {
 					//跳過空行
 					if (line.isEmpty()) {
@@ -50,7 +51,7 @@ public class FetchLogV2 {
 					
 					//是否滿足要找 log 的條件
 					if (hasMeetCondition(line, conditionMap)) {
-						System.out.println(line);
+						System.out.println("第" + num++ + "筆 " + line);
 					}
 				}
 			} catch (IOException e) {
@@ -79,16 +80,29 @@ public class FetchLogV2 {
 			return false;
 		}
 		
-		//是否包含關鍵字
+		//是否符合關鍵字
 		List<String> keywordList = conditionMap.get("keywords");
 		for (String keyword : keywordList) {
-			keyword.split(" ");
-			if (!line.contains(keyword)) {
+			String operator = getConditionOperator(keyword);
+			if ("and".equals(operator) && !line.contains(keyword.substring(4))) {
+				return false;
+			} else if ("not".equals(operator) && line.contains(keyword.substring(4))) {
 				return false;
 			}
 		}
 		
 		return true;
+	}
+
+	/**
+	 * 取得條件運算子
+	 */
+	private static String getConditionOperator(String keyword) {
+		if ("not ".equals(keyword.substring(0, 4))) {
+			return "not";
+		} else {
+			return "and";
+		}
 	}
 
 	/**
