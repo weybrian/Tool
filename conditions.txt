@@ -8,7 +8,8 @@ C:\Users\brian.wei\Downloads\1131021\webitr-2024-10-15.log
 
 --想查詢的關鍵字
 *keywords
-ERROR[
+and ERROR[
+not 連線已被您主機上的軟體中止。
 
 --想獲取的額外資訊
 *infos

@@ -60,7 +60,7 @@ public class FetchLogV2 {
 	}
 
 	/**
-	 * 是否滿足條件
+	 * webitr.log是否滿足條件
 	 * @param line
 	 * @param conditionMap
 	 * @return
@@ -70,6 +70,7 @@ public class FetchLogV2 {
 		List<String> periodList = conditionMap.get("period");
 		String startTime = periodList.stream().min(String::compareTo).get();
 		String endTime = periodList.stream().max(String::compareTo).get();
+		//適用webitr.log
 		if (line.length() < 25) {
 			return false;
 		}
@@ -81,6 +82,7 @@ public class FetchLogV2 {
 		//是否包含關鍵字
 		List<String> keywordList = conditionMap.get("keywords");
 		for (String keyword : keywordList) {
+			keyword.split(" ");
 			if (!line.contains(keyword)) {
 				return false;
 			}
