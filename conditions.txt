@@ -2,24 +2,30 @@
 --米字號(*)代表條件種類
 --米字號下方的值代表條件
 
---log檔案路徑
+--必填_log檔案路徑
 *logPaths
-C:\Users\brian.wei\Downloads\1131021\webitr-2024-10-15.log
+C:\Users\brian.wei\Downloads\1131219\webitr.log
+C:\Users\brian.wei\Downloads\20250115-037-log\webitr.log
 
---查詢期間
+--必填_查詢期間
 *period
-2024-10-15 19:18:51
-2024-10-15 18:54:00
+2024-12-19 00:00:20
+2025-01-15 19:56:20
 
---想查詢的關鍵字
+--必填_想查詢的關鍵字，前面可加and, not，需與關鍵字空一格
+--and 代表log必須包含關鍵字，可省略????????????????????????????????????省略會有問題
+--not 代表log必須不包含關鍵字
 *keywords
-and ERROR[
+--B188063EE14F2C77070121970D4A4145
+and Q123456789
 
---想獲取的額外資訊
+--必填_想獲取的額外資訊
 *infos
---SI=
+SI=
 --RA=
 --FL=
 --"action":
 --user_id = '
-log
+
+--log 是指去除時間、執行緒、請求資訊後的log
+--log

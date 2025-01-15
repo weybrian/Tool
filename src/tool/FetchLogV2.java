@@ -40,11 +40,13 @@ public class FetchLogV2 {
 		//要讀取的檔案
 		List<String> pathList = conditionMap.get("logPaths");
 		for (String filePath : pathList) {
+			System.out.println(filePath);
 			try (FileReader fr = new FileReader(filePath); 
 					BufferedReader br = new BufferedReader(fr);) {
 				String line;
 				int num = 1;
 				HashMap<String, HashMap<String, Integer>> infoMap = initInfoMap(conditionMap);
+				Boolean hasKeywords = false;
 				while ((line = br.readLine()) != null) {
 					//跳過空行
 					if (line.isEmpty()) {
@@ -54,12 +56,17 @@ public class FetchLogV2 {
 					//是否滿足要找 log 的條件
 					if (hasMeetCondition(line, conditionMap)) {
 						//列印符合條件的完整log
-						System.out.println("第" + num++ + "筆 " + line);
+//						System.out.println("第" + num++ + "筆 " + line);
 						addReportList(line, conditionMap, infoMap);
+						hasKeywords = true;
 					}
 				}
 				
-				printReport(infoMap);
+				if (hasKeywords) {
+					printReport(infoMap);
+				} else {
+					System.out.println("檔案無出現關鍵字");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -71,6 +78,7 @@ public class FetchLogV2 {
 	 * @param infoMap
 	 */
 	private static void printReport(HashMap<String, HashMap<String, Integer>> infoMap) {
+		System.out.println("統計出現次數");
 		for (Map.Entry<String, HashMap<String, Integer>> infoEntry : infoMap.entrySet()) {
 			//列出種類
 			System.out.println(infoEntry.getKey());
@@ -106,13 +114,19 @@ public class FetchLogV2 {
 	private static void addReportList(String line, HashMap<String, List<String>> conditionMap, HashMap<String, HashMap<String, Integer>> infoMap) {
 		List<String> infos = conditionMap.get("infos");
 		
-		//抓取log純訊息
-		if (infos.contains("log")) {
-			HashMap<String, Integer> logMap = infoMap.get("log");
-			logMap.put(line.split("\\]")[3], logMap.get(line.split("\\]")[3]) == null ? 1 : logMap.get(line.split("\\]")[3]) + 1);
+		for (String info : infos) {
+			//抓取log純訊息
+			if ("log".equals(info)) {
+				HashMap<String, Integer> logMap = infoMap.get("log");
+				logMap.put(line.split("\\]")[3], logMap.get(line.split("\\]")[3]) == null ? 1 : logMap.get(line.split("\\]")[3]) + 1);
+			} else {
+				//其他的info抓取
+				HashMap<String, Integer> otherInfoMap = infoMap.get(info);
+				if (line.split(info).length != 1) {
+					otherInfoMap.put(line.split(info)[1].split(",")[0], otherInfoMap.get(line.split(info)[1].split(",")[0]) == null ? 1 : otherInfoMap.get(line.split(info)[1].split(",")[0]) + 1);
+				}
+			}
 		}
-		
-		//TODO 其他的info抓取
 	}
 
 	/**
