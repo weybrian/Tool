@@ -56,7 +56,7 @@ public class FetchLogV2 {
 					//是否滿足要找 log 的條件
 					if (hasMeetCondition(line, conditionMap)) {
 						//列印符合條件的完整log
-//						System.out.println("第" + num++ + "筆 " + line);
+						System.out.println("第" + num++ + "筆 " + line);
 						addReportList(line, conditionMap, infoMap);
 						hasKeywords = true;
 					}
@@ -100,8 +100,10 @@ public class FetchLogV2 {
 	private static HashMap<String, HashMap<String, Integer>> initInfoMap(HashMap<String, List<String>> conditionMap) {
 		List<String> infoList = conditionMap.get("infos");
 		HashMap<String, HashMap<String, Integer>> resultMap = new HashMap<String, HashMap<String, Integer>>();
-		for (String info : infoList) {
-			resultMap.put(info, new HashMap<String, Integer>());
+		if (infoList != null) {
+			for (String info : infoList) {
+				resultMap.put(info, new HashMap<String, Integer>());
+			}
 		}
 		return resultMap;
 	}
@@ -114,16 +116,18 @@ public class FetchLogV2 {
 	private static void addReportList(String line, HashMap<String, List<String>> conditionMap, HashMap<String, HashMap<String, Integer>> infoMap) {
 		List<String> infos = conditionMap.get("infos");
 		
-		for (String info : infos) {
-			//抓取log純訊息
-			if ("log".equals(info)) {
-				HashMap<String, Integer> logMap = infoMap.get("log");
-				logMap.put(line.split("\\]")[3], logMap.get(line.split("\\]")[3]) == null ? 1 : logMap.get(line.split("\\]")[3]) + 1);
-			} else {
-				//其他的info抓取
-				HashMap<String, Integer> otherInfoMap = infoMap.get(info);
-				if (line.split(info).length != 1) {
-					otherInfoMap.put(line.split(info)[1].split(",")[0], otherInfoMap.get(line.split(info)[1].split(",")[0]) == null ? 1 : otherInfoMap.get(line.split(info)[1].split(",")[0]) + 1);
+		if (infos != null) {
+			for (String info : infos) {
+				//抓取log純訊息
+				if ("log".equals(info)) {
+					HashMap<String, Integer> logMap = infoMap.get("log");
+					logMap.put(line.split("\\]")[3], logMap.get(line.split("\\]")[3]) == null ? 1 : logMap.get(line.split("\\]")[3]) + 1);
+				} else {
+					//其他的info抓取
+					HashMap<String, Integer> otherInfoMap = infoMap.get(info);
+					if (line.split(info).length != 1) {
+						otherInfoMap.put(line.split(info)[1].split(",")[0], otherInfoMap.get(line.split(info)[1].split(",")[0]) == null ? 1 : otherInfoMap.get(line.split(info)[1].split(",")[0]) + 1);
+					}
 				}
 			}
 		}

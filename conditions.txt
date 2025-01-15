@@ -13,19 +13,22 @@ C:\Users\brian.wei\Downloads\20250115-037-log\webitr.log
 2025-01-15 19:56:20
 
 --必填_想查詢的關鍵字，前面可加and, not，需與關鍵字空一格
---and 代表log必須包含關鍵字，可省略????????????????????????????????????省略會有問題
---not 代表log必須不包含關鍵字
+--and 代表log必須包含關鍵字，不可省略
+--not 代表log必須不包含關鍵字，不可省略
 *keywords
---B188063EE14F2C77070121970D4A4145
-and Q123456789
+and B188063EE14F2C77070121970D4A4145
+--and nav=%
+--and checkWeek.ug
+--Unable to add HTTP headers since response is already committed on entry to the HTTP header security Filter
+--and Q123456789
+--and FL=POST /WebITR/p4/apply/leave/checkWeek.ug
 
---必填_想獲取的額外資訊
+--想獲取的額外資訊
 *infos
-SI=
---RA=
+--PU=
 --FL=
 --"action":
 --user_id = '
 
 --log 是指去除時間、執行緒、請求資訊後的log
---log
+log
