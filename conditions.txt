@@ -4,19 +4,18 @@
 
 --必填_log檔案路徑
 *logPaths
-C:\Users\brian.wei\Downloads\1131219\webitr.log
-C:\Users\brian.wei\Downloads\20250115-037-log\webitr.log
+C:\Users\brian.wei\Downloads\webitr_90.6_8082_1140319.log
 
 --必填_查詢期間
 *period
-2024-12-19 00:00:20
-2025-01-15 19:56:20
+2025-03-19 00:00:32
+2025-03-20 11:19:42
 
 --必填_想查詢的關鍵字，前面可加and, not，需與關鍵字空一格
 --and 代表log必須包含關鍵字，不可省略
 --not 代表log必須不包含關鍵字，不可省略
 *keywords
-and B188063EE14F2C77070121970D4A4145
+and PoolGuardConnection$prepareStatement
 --and nav=%
 --and checkWeek.ug
 --Unable to add HTTP headers since response is already committed on entry to the HTTP header security Filter
@@ -29,6 +28,6 @@ and B188063EE14F2C77070121970D4A4145
 --FL=
 --"action":
 --user_id = '
-
+TraceID: 
 --log 是指去除時間、執行緒、請求資訊後的log
-log
+--log

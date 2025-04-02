@@ -56,7 +56,7 @@ public class FetchLogV2 {
 					//是否滿足要找 log 的條件
 					if (hasMeetCondition(line, conditionMap)) {
 						//列印符合條件的完整log
-						System.out.println("第" + num++ + "筆 " + line);
+//						System.out.println("第" + num++ + "筆 " + line);
 						addReportList(line, conditionMap, infoMap);
 						hasKeywords = true;
 					}
@@ -80,11 +80,11 @@ public class FetchLogV2 {
 	private static void printReport(HashMap<String, HashMap<String, Integer>> infoMap) {
 		System.out.println("統計出現次數");
 		for (Map.Entry<String, HashMap<String, Integer>> infoEntry : infoMap.entrySet()) {
-			//列出種類
-			System.out.println(infoEntry.getKey());
 			
-			//依照次數排序
 			List<Map.Entry<String, Integer>> list = new ArrayList<>(infoEntry.getValue().entrySet());
+			//列出種類
+			System.out.println("不重複 " + list.size() + " 筆 " + infoEntry.getKey());
+			//依照次數排序
 	        list.sort(Map.Entry.comparingByValue());
 	        for (Map.Entry<String, Integer> orderEntry : list) {
 				System.out.println(orderEntry.getValue() + "次 " + orderEntry.getKey());
